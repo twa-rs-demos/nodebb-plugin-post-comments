@@ -20,7 +20,7 @@ var db_post = require('./public/db-posts');
 			db_post.saveComment(req.body, com_id, function (result) {
 				res.status(201).json({value: '保存评论成功！'});
 			})
-		})
+		});
 		callback();
 	};
 
