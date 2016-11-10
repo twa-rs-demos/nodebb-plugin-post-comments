@@ -88,12 +88,13 @@
 				comment_area +=
 					add_comment_data(add_comments(comments));
 				add_toggle(data_pid);
-			}else{
-				comment_area +=	add_comment_data('');
+			} else {
+				comment_area += add_comment_data('');
 			}
 			comment_area += writer_div;
 			$('[data-pid=' + data_pid + ']').find('.post-footer').after(comment_area);
 		}
+		flip_toggle();
 	}
 
 	function add_comment_data(data) {
@@ -101,7 +102,7 @@
 		var comment_area =
 			'<div class="panel">' +
 			'	<ul class="comments_ul">' +
-			      data +
+			data +
 			'	</ul>' +
 			'</div>';
 		return comment_area;
@@ -124,9 +125,14 @@
 			'	<i style="display:none;">展开</i>' +
 			'</a>';
 		$('[data-pid=' + data_pid + ']')
-			.find('.post-tools').append(comment_flip);
+			.find('.post-tools').after(comment_flip);
+	}
+
+
+	function flip_toggle() {
 
 		$('.flip').click(function () {
+			console.log("biu");
 			var current_panel = $(this).closest('div').next();
 			current_panel.slideToggle("normal");
 			$(this).children('i').toggle();
@@ -134,12 +140,12 @@
 		});
 	}
 
-	$(window).on('action:composer.post.new',function(data){
+	$(window).on('action:composer.post.new', function (data) {
 		// $(".post-footer").delay(800);
 
 		console.log('8080808080');
-		var pid =  data.pid;
-		get_page_posts([{"pid":pid}]);
+		var pid = data.pid;
+		get_page_posts([{"pid": pid}]);
 		add_toggle(pid);
 	})
 
