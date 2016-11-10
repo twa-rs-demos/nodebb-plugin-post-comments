@@ -1,4 +1,4 @@
-var db_post = require('./public/db-posts');
+var db_post = require('./public/db/db-posts');
 
 (function (module) {
 	"use strict";
@@ -26,11 +26,14 @@ var db_post = require('./public/db-posts');
 
 	function findCommentId(pid, posts) {
 		for (var post of posts) {
-			if (!post.hasOwnProperty("comments")) {
-				return 0;
-			}
+
 			if (post.pid == pid) {
-				return post.comments.length;
+				if (!post.hasOwnProperty("comments")) {
+					return 0;
+				}else {
+					return post.comments.length;
+				}
+
 			}
 		}
 	}

@@ -11,7 +11,7 @@
   },
   "scripts":[
     "./public/lib/main.js",
-    "./public/db-posts.js"
+    "./public/db/db-posts.js"
   ],
   "less":[
     "./public/less/getPost.less"

@@ -7,6 +7,7 @@
 		submit_comment();
 	});
 
+
 	function submit_comment() {
 
 		$("#content").off().on('click', '.comment-submit', function () {
@@ -15,20 +16,20 @@
 
 			var value = $(this).prev().val();
 			var showComment = "<li>" + value + "</li>";
-			$(this).parents().prev().prev()
+			$(this).parent().prev().prev()
 				.children().append(showComment);
 			$(this).prev().val("");
 
-			sendComment(value,pid);
+			sendComment(value, pid);
 
 		})
 	}
 
-	function sendComment(value,pid){
+	function sendComment(value, pid) {
 		$.ajax({
 			type: "POST",
 			url: "/save/comment",
-			data: {com_content: value,pid:pid},
+			data: {com_content: value, pid: pid},
 			dataType: "json",
 			success: function (result) {
 			},
@@ -53,9 +54,9 @@
 				console.log('error');
 			}
 		});
-	};
+	}
 
-	function reset_comment_area(){
+	function reset_comment_area() {
 		$(".comment-write").click(function () {
 			var next = $(this).parent().next();
 			if (next.css("display") === 'block') {
@@ -84,44 +85,62 @@
 			if (postData[i].hasOwnProperty("comments")) {
 
 				var comments = postData[i].comments;
-				 comment_area +=
-					'<div class="panel">' +
-					'	<ul class="comments_ul">' +
-							add_comments(comments) +
-					'	</ul>'  +
-					'</div>';
+				comment_area +=
+					add_comment_data(add_comments(comments));
 				add_toggle(data_pid);
+			}else{
+				comment_area +=	add_comment_data('');
 			}
 			comment_area += writer_div;
 			$('[data-pid=' + data_pid + ']').find('.post-footer').after(comment_area);
 		}
-	};
+	}
+
+	function add_comment_data(data) {
+
+		var comment_area =
+			'<div class="panel">' +
+			'	<ul class="comments_ul">' +
+			      data +
+			'	</ul>' +
+			'</div>';
+		return comment_area;
+	}
 
 	function add_comments(comments_data) {
 
 		var comment_li = '';
 		for (var k = 0; k < comments_data.length; k++) {
-			comment_li += '<li >' + comments_data[k].comContents + '</li>';
+			comment_li += '<li >' + comments_data[k].com_content + '</li>';
 		}
 		return comment_li;
-	};
+	}
 
-	function add_toggle(data_pid){
+	function add_toggle(data_pid) {
 
 		var comment_flip =
-				'<a class="flip">' +
-				'	<i>收起</i>' +
-				'	<i style="display:none;">展开</i>' +
-				'</a>';
-		$('[data-pid='+data_pid+']')
+			'<a class="flip">' +
+			'	<i>收起</i>' +
+			'	<i style="display:none;">展开</i>' +
+			'</a>';
+		$('[data-pid=' + data_pid + ']')
 			.find('.post-tools').append(comment_flip);
 
-		$('.flip').click(function(){
-					var current_panel = $(this).closest('div').next();
-					current_panel.slideToggle("normal");
-					$(this).children('i').toggle();
-					$(this).closest('div').nextAll('.comment-input-area').css('display', 'none');
+		$('.flip').click(function () {
+			var current_panel = $(this).closest('div').next();
+			current_panel.slideToggle("normal");
+			$(this).children('i').toggle();
+			$(this).closest('div').nextAll('.comment-input-area').css('display', 'none');
 		});
 	}
+
+	$(window).on('action:composer.post.new',function(data){
+		// $(".post-footer").delay(800);
+
+		console.log('8080808080');
+		var pid =  data.pid;
+		get_page_posts([{"pid":pid}]);
+		add_toggle(pid);
+	})
 
 }());
