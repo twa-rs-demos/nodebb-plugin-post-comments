@@ -4,14 +4,15 @@
   "hooks": [
     { "hook": "filter:scripts.get", "method": "addScripts" },
     { "hook": "static:app.load", "method": "init" },
-    { "hook": "filter:post.getPosts", "method": "showPosts" }
+    { "hook": "filter:post.getPosts", "method": "showPosts" },
+    { "hook": "filter:post.save", "method": "createPost" }
   ],
   "staticDirs": {
     "lib": "public/lib"
   },
   "scripts":[
     "./public/lib/main.js",
-    "./public/db-posts.js"
+    "./public/db/db-posts.js"
   ],
   "less":[
     "./public/less/getPost.less"
