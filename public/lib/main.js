@@ -16,12 +16,8 @@
 			var showComment = "<li>" + value + "</li>";
 			$(this).parent().prev().prev().children().append(showComment);
 			$(this).prev().val("");
-			// if($(this).closest('.panel').find('li')!=='undefined'){
-			// 	add_toggle(data_pid);
-			// }
 
 			sendComment(value, data_pid);
-
 		})
 	}
 
@@ -164,6 +160,4 @@
 			}
 		});
 	})
-
-
 }());
