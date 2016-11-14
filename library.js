@@ -54,7 +54,6 @@ var db_post = require('./public/db/db-posts');
 
     comments.createPost = function(data,callback) {
 
-        console.log(data);
         newPost = data;
         callback(null, data);
     }

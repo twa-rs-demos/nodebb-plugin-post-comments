@@ -10,11 +10,8 @@
 
         $(window).scroll(function () {
 
-            console.log(timer);
             if(timer === null){
                 timer = setTimeout(function () {
-                    console.log('进来了');
-                    console.log(timer);
                     get_comments();
                     submit_comment();
                 },3000);
