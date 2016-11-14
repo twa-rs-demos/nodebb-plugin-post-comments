@@ -10,11 +10,10 @@
         $(window).scroll(function () {
 
             var scroll_top = document.body.scrollTop || document.documentElement.scrollTop;
-            var length = scroll_top - pre_scroll_top;
-            var move_length = Math.sqrt(length*length);
+            var move_length = scroll_top - pre_scroll_top;
             pre_scroll_top = scroll_top;
 
-            if (move_length > 50) {
+            if (Math.abs(move_length) > 15) {
                 get_comments();
                 submit_comment();
             }
