@@ -2,6 +2,7 @@
 
     var src;
     var pre_scroll_top = 0;
+    var timer = null;
 
     $(window).on('action:topic.loading', function (ev, data) {
         get_comments();
@@ -9,13 +10,16 @@
 
         $(window).scroll(function () {
 
-            var scroll_top = document.body.scrollTop || document.documentElement.scrollTop;
-            var move_length = scroll_top - pre_scroll_top;
-            pre_scroll_top = scroll_top;
+            console.log(timer);
+            if(timer === null){
+                timer = setTimeout(function () {
+                    console.log('进来了');
+                    console.log(timer);
+                    get_comments();
+                    submit_comment();
+                },3000);
 
-            if (Math.abs(move_length) > 15) {
-                get_comments();
-                submit_comment();
+                timer = null;
             }
         });
 
@@ -85,11 +89,11 @@
 
         var edit_area =
             '<div>' +
-            '	<button class="comment-write" data-pid="' + data_pid + '">我要说一句</button>' +
+            '	<button class="comment-write btn btn-primary btn-sm" data-pid="' + data_pid + '">我要说一句</button>' +
             '</div>' +
             '<div class="comment-input-area" data-pid="' + data_pid + '">' +
             '	<input data-pid="' + data_pid + '"/>' +
-            '	<button class="comment-submit" data-pid="' + data_pid + '">发表</button>' +
+            '	<button class="comment-submit btn btn-primary btn-sm" data-pid="' + data_pid + '">发表</button>' +
             '</div>';
         return edit_area;
     }
