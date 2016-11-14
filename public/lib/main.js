@@ -4,14 +4,17 @@
     var pre_scroll_top = 0;
 
     $(window).on('action:topic.loading', function (ev, data) {
+        get_comments();
+        submit_comment();
 
         $(window).scroll(function () {
 
             var scroll_top = document.body.scrollTop || document.documentElement.scrollTop;
-            var move_length = scroll_top - pre_scroll_top;
+            var length = scroll_top - pre_scroll_top;
+            var move_length = Math.sqrt(length*length);
             pre_scroll_top = scroll_top;
 
-            if (move_length > 30) {
+            if (move_length > 50) {
                 get_comments();
                 submit_comment();
             }
