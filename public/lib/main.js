@@ -180,7 +180,7 @@
 
                 setTimeout(function () {
                     get_page_posts(postsdata);
-                }, 100);
+                }, 1000);
 
             },
             error: function (err) {
